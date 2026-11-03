@@ -3,6 +3,9 @@ name: Crear APK
 on:
   workflow_dispatch:   # se ejecuta al pulsar "Run workflow"
 
+permissions:
+  contents: write      # necesario para publicar el APK como descarga
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -19,7 +22,9 @@ jobs:
           java-version: "17"
 
       - name: Instalar dependencias
-        run: npm install
+        run: |
+          npm install
+          pip install pillow
 
       - name: Preparar la web
         run: |
@@ -30,15 +35,19 @@ jobs:
         run: |
           npx cap add android
           npx cap sync android
+          python3 scripts/make_icons.py
 
       - name: Compilar APK
         run: |
           cd android
           chmod +x gradlew
           ./gradlew assembleDebug
+          cp app/build/outputs/apk/debug/app-debug.apk ../UniLife.apk
 
-      - name: Guardar APK
-        uses: actions/upload-artifact@v4
+      - name: Publicar descarga
+        uses: softprops/action-gh-release@v2
         with:
-          name: UniLife-apk
-          path: android/app/build/outputs/apk/debug/app-debug.apk
+          tag_name: v${{ github.run_number }}
+          name: UniLife v${{ github.run_number }}
+          files: UniLife.apk
+          make_latest: true
