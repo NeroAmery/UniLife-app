@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#E8D5F2" id="meta-theme" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <title>UniLife — Tu compañero universitario</title>
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/forest.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script>
+    // Aplica tema guardado antes de pintar (evita parpadeo)
+    (function () {
+      try {
+        if (localStorage.getItem('ul_theme') === 'dark') {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      } catch (e) {}
+    })();
+  </script>
+</head>
+<body>
+  <!-- Fondo decorativo: cielo, agua, flores -->
+  <div class="nature-bg" aria-hidden="true">
+    <div class="sky"></div>
+    <div class="sun"></div>
+    <div class="cloud cloud-1"></div>
+    <div class="cloud cloud-2"></div>
+    <div class="cloud cloud-3"></div>
+    <div class="water"></div>
+    <div class="wave wave-1"></div>
+    <div class="wave wave-2"></div>
+    <div class="flower f1">🌸</div>
+    <div class="flower f2">🌼</div>
+    <div class="flower f3">🌿</div>
+    <div class="flower f4">🌷</div>
+    <div class="flower f5">🍃</div>
+    <div class="flower f6">🌺</div>
+    <div class="flower f7">✨</div>
+    <div class="flower f8">🌸</div>
+  </div>
+
+  <div id="app">
+
+    <!-- ===== SIDEBAR (desktop) / DRAWER (mobile) ===== -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="logo">
+          <span class="logo-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 1 2 3 6 3s6-2 6-3v-5"/></svg></span>
+          <span class="logo-text">UniLife</span>
+        </div>
+        <button class="sidebar-close" id="sidebar-close" aria-label="Cerrar menú"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+      </div>
+
+      <nav class="nav-links">
+        <button class="nav-item active" data-section="dashboard">
+          <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1h-5v-6H9v6H4a1 1 0 01-1-1V9.5z"/></svg></span>
+          <span class="nav-label">Inicio</span>
+        </button>
+        <button class="nav-item" data-section="calendar">
+          <span class="nav-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></span>
+          <span class="nav-label">Calendario</span>
+        </button>
+        <button class="nav-item" data-section="emotional">
+          <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></span>
+          <span class="nav-label">Apoyo</span>
+        </button>
+        <button class="nav-item" data-section="faith">
+          <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg></span>
+          <span class="nav-label">Palabra</span>
+        </button>
+        <button class="nav-item" data-section="wallet">
+          <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M21 12V7H5a2 2 0 010-4h14v4"/><path d="M3 5v14a2 2 0 002 2h16v-5"/><path d="M18 12a2 2 0 100 4h4v-4h-4z"/></svg></span>
+          <span class="nav-label">Billetera</span>
+        </button>
+        <button class="nav-item" data-section="pomodoro">
+          <span class="nav-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></span>
+          <span class="nav-label">Pomodoro</span>
+        </button>
+        <button class="nav-item" data-section="tutorials">
+          <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 1 2 3 6 3s6-2 6-3v-5"/></svg></span>
+          <span class="nav-label">Tutorías</span>
+        </button>
+      </nav>
+
+      <div class="pet-preview" id="pet-preview">
+        <div class="pet-avatar" id="pet-avatar">🐣</div>
+        <div class="pet-info">
+          <span class="pet-name" id="pet-name">Cubby</span>
+          <span class="pet-level" id="pet-level">Nivel 1</span>
+        </div>
+      </div>
+    </aside>
+
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+    <!-- ===== MAIN ===== -->
+    <main class="main">
+      <header class="topbar">
+        <button class="menu-btn" id="menu-btn" aria-label="Menú"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg></button>
+        <h1 class="page-title" id="page-title">Inicio</h1>
+        <div class="topbar-right">
+          <button class="theme-btn" id="theme-btn" type="button" title="Cambiar tema" aria-label="Modo oscuro o claro">
+            <svg id="theme-icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M21 14.5A8.5 8.5 0 119.5 3 7 7 0 0021 14.5z"/></svg>
+          </button>
+          <div class="user-chip">Estudiante</div>
+        </div>
+      </header>
+
+      <div class="content">
+
+        <!-- ========== DASHBOARD ========== -->
+        <section id="section-dashboard" class="section active">
+          <div class="welcome-banner">
+            <div class="welcome-text">
+              <h2 id="greeting">¡Hola! 👋</h2>
+              <p>Tu espacio para organizar el semestre sin estrés.</p>
+            </div>
+            <div class="pet-card">
+              <div class="pet-big" id="pet-display">🐣</div>
+              <div class="pet-stats">
+                <span class="pet-level-big">Nv. <strong id="pet-level-big">1</strong></span>
+                <span class="pet-xp" id="pet-xp">0 / 100 XP</span>
+              </div>
+              <div class="xp-bar"><div class="xp-fill" id="xp-fill"></div></div>
+              <p class="pet-motto" id="pet-motto">¡Completa tareas para crecer!</p>
+            </div>
+          </div>
+
+          <div class="stats-row">
+            <div class="stat-pill">
+              <span class="stat-num" id="stat-pending">0</span>
+              <span class="stat-label">Pendientes</span>
+            </div>
+            <div class="stat-pill">
+              <span class="stat-num" id="stat-completed">0</span>
+              <span class="stat-label">Hechas</span>
+            </div>
+            <div class="stat-pill">
+              <span class="stat-num" id="stat-savings">$0</span>
+              <span class="stat-label">Ahorro</span>
+            </div>
+          </div>
+
+          <div class="cards-grid">
+            <div class="card">
+              <h3 class="card-title">📌 Próximas entregas</h3>
+              <ul class="simple-list" id="upcoming-list">
+                <li class="empty">No hay actividades próximas</li>
+              </ul>
+            </div>
+            <div class="card">
+              <h3 class="card-title">🗓️ Horario de hoy</h3>
+              <ul class="simple-list" id="today-schedule">
+                <li class="empty">Sin clases hoy</li>
+              </ul>
+            </div>
+            <div class="card tip-card">
+              <h3 class="card-title">💡 Consejo del día</h3>
+              <p id="daily-tip-text">Recuerda tomar descansos. Tu mente también necesita recuperarse.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- ========== CALENDAR ========== -->
+        <section id="section-calendar" class="section">
+          <div class="segmented">
+            <button class="seg-btn active" data-tab="cal-calendar">Calendario</button>
+            <button class="seg-btn" data-tab="cal-schedule">Horario</button>
+            <button class="seg-btn" data-tab="cal-tasks">Actividades</button>
+          </div>
+
+          <!-- Calendar tab -->
+          <div class="tab-pane active" id="cal-calendar">
+            <div class="cal-nav">
+              <button class="icon-btn" id="prev-month">‹</button>
+              <h3 id="current-month">Octubre 2026</h3>
+              <button class="icon-btn" id="next-month">›</button>
+            </div>
+            <div class="calendar-grid" id="calendar-grid"></div>
+            <div class="card day-detail">
+              <h4 id="day-detail-title">Eventos del día</h4>
+              <ul class="simple-list" id="day-events-list">
+                <li class="empty">Selecciona un día</li>
+              </ul>
+            </div>
+            <button class="fab" id="add-event-btn">＋ Fecha</button>
+          </div>
+
+          <!-- Schedule tab -->
+          <div class="tab-pane" id="cal-schedule">
+            <div class="card">
+              <h3 class="card-title">Registrar materia</h3>
+              <form id="subject-form" class="form">
+                <input type="text" id="subject-name" placeholder="Nombre de la materia" required />
+                <div class="form-row">
+                  <select id="subject-day" required>
+                    <option value="">Día</option>
+                    <option value="0">Lunes</option>
+                    <option value="1">Martes</option>
+                    <option value="2">Miércoles</option>
+                    <option value="3">Jueves</option>
+                    <option value="4">Viernes</option>
+                    <option value="5">Sábado</option>
+                  </select>
+                  <input type="text" id="subject-room" placeholder="Aula" />
+                </div>
+                <div class="form-row">
+                  <input type="time" id="subject-start" required />
+                  <input type="time" id="subject-end" required />
+                </div>
+                <button type="submit" class="btn btn-primary">Agregar materia</button>
+              </form>
+            </div>
+            <div class="card">
+              <h3 class="card-title">Mis materias</h3>
+              <ul class="item-list" id="subjects-list">
+                <li class="empty">Aún no registras materias</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Tasks tab -->
+          <div class="tab-pane" id="cal-tasks">
+            <div class="card">
+              <h3 class="card-title">Nueva actividad</h3>
+              <form id="task-form" class="form">
+                <input type="text" id="task-title" placeholder="Ej: Entrega de ensayo" required />
+                <select id="task-type">
+                  <option value="entrega">Entrega</option>
+                  <option value="examen">Examen</option>
+                  <option value="proyecto">Proyecto</option>
+                  <option value="otro">Otro</option>
+                </select>
+                <div class="form-row">
+                  <input type="date" id="task-date" required />
+                  <input type="time" id="task-time" value="23:59" />
+                </div>
+                <textarea id="task-notes" placeholder="Notas (opcional)" rows="2"></textarea>
+                <button type="submit" class="btn btn-primary">Guardar actividad</button>
+              </form>
+            </div>
+            <div class="card">
+              <h3 class="card-title">Actividades registradas</h3>
+              <ul class="item-list" id="tasks-list">
+                <li class="empty">No hay actividades aún</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- ========== EMOTIONAL ========== -->
+        <section id="section-emotional" class="section">
+          <div class="hero-soft">
+            <h2>🌿 Espacio de calma</h2>
+            <p>Herramientas suaves para cuando el día se siente pesado.</p>
+          </div>
+
+          <div class="cards-grid">
+            <div class="card breathing-card">
+              <h3 class="card-title">🫁 Respiración 4-7-8</h3>
+              <div class="breath-circle" id="breath-circle">
+                <span id="breath-text">Listo</span>
+              </div>
+              <div class="btn-row">
+                <button class="btn btn-primary" id="start-breath">Comenzar</button>
+                <button class="btn btn-ghost" id="stop-breath" disabled>Detener</button>
+              </div>
+              <p class="hint">Inhala 4s · Sostén 7s · Exhala 8s</p>
+            </div>
+
+            <div class="card">
+              <h3 class="card-title">💡 Consejo para ti</h3>
+              <div class="tip-box" id="emotional-tip">
+                <p>Cargando consejo...</p>
+              </div>
+              <button class="btn btn-ghost" id="new-tip-btn">Otro consejo</button>
+            </div>
+
+            <div class="card">
+              <h3 class="card-title">¿Cómo te sientes?</h3>
+              <div class="mood-row" id="mood-options">
+                <button class="mood-btn" data-mood="great">😄</button>
+                <button class="mood-btn" data-mood="good">🙂</button>
+                <button class="mood-btn" data-mood="ok">😐</button>
+                <button class="mood-btn" data-mood="bad">😔</button>
+                <button class="mood-btn" data-mood="awful">😢</button>
+              </div>
+              <p class="mood-feedback" id="mood-feedback"></p>
+            </div>
+
+            <div class="card">
+              <h3 class="card-title">Recursos rápidos</h3>
+              <ul class="resource-list">
+                <li>🚶 Camina 10 minutos</li>
+                <li>💧 Bebe un vaso de agua</li>
+                <li>📱 Pausa de redes 30 min</li>
+                <li>📝 3 cosas por las que agradeces</li>
+                <li>🎧 Tu canción favorita</li>
+                <li>🤝 Habla con alguien de confianza</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- ========== FE / PALABRA ========== -->
+        <section id="section-faith" class="section">
+          <div class="hero-soft">
+            <h2>📖 Palabra y ánimo</h2>
+            <p>Versículos, reflexiones y oración para levantar el corazón con la Escritura.</p>
+          </div>
+
+          <div class="card verse-of-day">
+            <h3 class="card-title">✨ Versículo del día</h3>
+            <blockquote class="verse-text" id="daily-verse-text">Cargando…</blockquote>
+            <p class="verse-ref" id="daily-verse-ref"></p>
+            <p class="verse-reflection" id="daily-verse-reflection"></p>
+            <div class="btn-row">
+              <button class="btn btn-ghost" id="fav-daily-btn">♡ Guardar</button>
+              <button class="btn btn-primary" id="new-daily-verse">Otro versículo</button>
+            </div>
+          </div>
+
+          <div class="faith-topics" id="faith-topics">
+            <button class="faith-chip active" data-topic="all">Todos</button>
+            <button class="faith-chip" data-topic="animo">Ánimo</button>
+            <button class="faith-chip" data-topic="paz">Paz</button>
+            <button class="faith-chip" data-topic="fortaleza">Fortaleza</button>
+            <button class="faith-chip" data-topic="estudio">Estudios</button>
+            <button class="faith-chip" data-topic="ansiedad">Ansiedad</button>
+            <button class="faith-chip" data-topic="identidad">Identidad</button>
+          </div>
+
+          <div class="cards-grid" id="faith-cards"></div>
+
+          <div class="card">
+            <h3 class="card-title">🙏 Oración breve</h3>
+            <p class="prayer-text" id="prayer-text"></p>
+            <button class="btn btn-ghost" id="new-prayer-btn">Otra oración</button>
+          </div>
+
+          <div class="card">
+            <h3 class="card-title">♡ Mis favoritos</h3>
+            <ul class="simple-list" id="faith-favorites">
+              <li class="empty">Aún no guardas versículos</li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- ========== WALLET ========== -->
+        <section id="section-wallet" class="section">
+          <div class="wallet-top">
+            <div class="wallet-box savings-box">
+              <span class="w-label">Ahorro de emergencia</span>
+              <span class="w-amount" id="savings-amount">$0.00</span>
+              <div class="btn-row">
+                <button class="btn btn-primary btn-sm" id="add-savings-btn">＋ Ahorrar</button>
+                <button class="btn btn-ghost btn-sm" id="withdraw-savings-btn">Retirar</button>
+              </div>
+            </div>
+            <div class="wallet-box">
+              <span class="w-label">Balance del mes</span>
+              <span class="w-amount" id="month-balance">$0.00</span>
+              <span class="w-sub" id="month-income">Ingresos: $0</span>
+              <span class="w-sub" id="month-expenses">Gastos: $0</span>
+            </div>
+          </div>
+
+          <div class="cards-grid">
+            <div class="card">
+              <h3 class="card-title">Registrar movimiento</h3>
+              <form id="expense-form" class="form">
+                <div class="form-row">
+                  <select id="tx-type">
+                    <option value="expense">Gasto</option>
+                    <option value="income">Ingreso</option>
+                  </select>
+                  <input type="number" id="tx-amount" placeholder="Monto" step="0.01" min="0.01" required />
+                </div>
+                <input type="text" id="tx-desc" placeholder="Descripción" required />
+                <select id="tx-category">
+                  <option value="comida">Comida</option>
+                  <option value="transporte">Transporte</option>
+                  <option value="materiales">Materiales</option>
+                  <option value="entretenimiento">Entretenimiento</option>
+                  <option value="vivienda">Vivienda</option>
+                  <option value="otros">Otros</option>
+                </select>
+                <button type="submit" class="btn btn-primary">Registrar</button>
+              </form>
+            </div>
+
+            <div class="card">
+              <h3 class="card-title">💡 Consejo monetario</h3>
+              <div class="tip-box" id="money-tip">
+                <p>Ahorra primero, gasta después. Incluso poco a poco suma.</p>
+              </div>
+              <button class="btn btn-ghost" id="new-money-tip">Otro consejo</button>
+            </div>
+
+            <div class="card full-width">
+              <h3 class="card-title">Historial reciente</h3>
+              <ul class="item-list" id="transactions-list">
+                <li class="empty">Sin movimientos aún</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- ========== POMODORO ========== -->
+        <section id="section-pomodoro" class="section">
+          <div class="pomo-layout">
+            <div class="card pomo-timer">
+              <div class="pomo-modes">
+                <button class="mode-btn active" data-mode="focus">Enfoque</button>
+                <button class="mode-btn" data-mode="short">Corto</button>
+                <button class="mode-btn" data-mode="long">Largo</button>
+              </div>
+              <div class="forest-wrap">
+                <svg id="forest" viewBox="0 0 300 130" role="img" aria-label="Bosque que crece mientras te concentras"></svg>
+                <p class="forest-msg" id="forest-msg"></p>
+                <p class="forest-total">Tu bosque: <strong id="forest-total">0</strong> árboles</p>
+              </div>
+              <div class="timer-wrap">
+                <svg class="timer-ring" viewBox="0 0 100 100">
+                  <circle class="ring-bg" cx="50" cy="50" r="45" />
+                  <circle class="ring-fg" id="progress-ring" cx="50" cy="50" r="45" />
+                </svg>
+                <div class="timer-time" id="timer-display">25:00</div>
+              </div>
+              <div class="btn-row center">
+                <button class="btn btn-primary btn-lg" id="timer-start">Iniciar</button>
+                <button class="btn btn-ghost" id="timer-reset">Reiniciar</button>
+              </div>
+              <p class="sessions">Sesiones hoy: <strong id="sessions-count">0</strong></p>
+            </div>
+
+            <div class="card">
+              <h3 class="card-title">Configuración</h3>
+              <div class="setting">
+                <label>Enfoque (min)</label>
+                <input type="number" id="focus-time" value="25" min="1" max="60" />
+              </div>
+              <div class="setting">
+                <label>Descanso corto</label>
+                <input type="number" id="short-time" value="5" min="1" max="30" />
+              </div>
+              <div class="setting">
+                <label>Descanso largo</label>
+                <input type="number" id="long-time" value="15" min="1" max="45" />
+              </div>
+              <button class="btn btn-ghost" id="apply-settings">Aplicar</button>
+            </div>
+
+            <div class="card">
+              <h3 class="card-title">Cómo usarlo</h3>
+              <ol class="steps">
+                <li>Elige una tarea concreta</li>
+                <li>Trabaja el tiempo de enfoque</li>
+                <li>Descansa el tiempo corto</li>
+                <li>Cada 4 ciclos, toma descanso largo</li>
+              </ol>
+            </div>
+          </div>
+        </section>
+
+        <!-- ========== TUTORIALS (personal) ========== -->
+        <section id="section-tutorials" class="section">
+          <div class="hero-soft">
+            <h2>📚 Mis tutorías</h2>
+            <p>Organiza las clases que ofreces o a las que te inscribes. Todo se guarda en tu dispositivo.</p>
+          </div>
+
+          <div class="segmented">
+            <button class="seg-btn active" data-tab="tut-mine">Mis clases</button>
+            <button class="seg-btn" data-tab="tut-enrolled">Inscritas</button>
+          </div>
+
+          <div class="tab-pane active" id="tut-mine">
+            <button class="btn btn-primary" id="create-tutorial-btn" style="margin-bottom:1rem">＋ Ofrecer tutoría</button>
+            <div class="tut-list" id="my-tutorials-list"></div>
+          </div>
+
+          <div class="tab-pane" id="tut-enrolled">
+            <div class="card" style="margin-bottom:1rem">
+              <h3 class="card-title">Anotar tutoría de otro</h3>
+              <form id="enroll-form" class="form">
+                <input type="text" id="enroll-title" placeholder="Título de la tutoría" required />
+                <input type="text" id="enroll-tutor" placeholder="Nombre del tutor" required />
+                <div class="form-row">
+                  <input type="date" id="enroll-date" required />
+                  <input type="time" id="enroll-time" required />
+                </div>
+                <input type="text" id="enroll-place" placeholder="Lugar o enlace (opcional)" />
+                <button type="submit" class="btn btn-primary">Guardar inscripción</button>
+              </form>
+            </div>
+            <div class="tut-list" id="enrolled-list"></div>
+          </div>
+        </section>
+
+      </div><!-- /.content -->
+    </main>
+
+    <!-- ===== BOTTOM NAV (mobile) ===== -->
+    <nav class="bottom-nav" id="bottom-nav">
+      <button class="bn-item active" data-section="dashboard"><span class="bn-svg"><svg viewBox="0 0 24 24"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1h-5v-6H9v6H4a1 1 0 01-1-1V9.5z"/></svg></span><span>Inicio</span>
+      </button>
+      <button class="bn-item" data-section="calendar"><span class="bn-svg"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></span><span>Agenda</span>
+      </button>
+      <button class="bn-item" data-section="emotional"><span class="bn-svg"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></span><span>Calma</span>
+      </button>
+      <button class="bn-item" data-section="faith"><span class="bn-svg"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg></span><span>Palabra</span>
+      </button>
+      <button class="bn-item" data-section="wallet"><span class="bn-svg"><svg viewBox="0 0 24 24"><path d="M21 12V7H5a2 2 0 010-4h14v4"/><path d="M3 5v14a2 2 0 002 2h16v-5"/><path d="M18 12a2 2 0 100 4h4v-4h-4z"/></svg></span><span>Dinero</span>
+      </button>
+      <button class="bn-item" data-section="pomodoro"><span class="bn-svg"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></span><span>Focus</span>
+      </button>
+      <button class="bn-item" data-section="tutorials"><span class="bn-svg"><svg viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 1 2 3 6 3s6-2 6-3v-5"/></svg></span><span>Tutorías</span>
+      </button>
+    </nav>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal-backdrop" id="modal-backdrop">
+    <div class="modal" id="modal">
+      <button class="modal-x" id="modal-close">✕</button>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+
+  <script src="js/forest.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

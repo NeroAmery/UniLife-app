@@ -1,0 +1,21 @@
+/* Bosque Pomodoro (estilo sticker) — independiente del tema, funciona en claro y oscuro */
+.forest-wrap{margin:.4rem 0 1rem;text-align:center}
+#forest{width:100%;max-width:340px;height:auto;display:block;margin:0 auto}
+#forest .ground{fill:#7BC9A0;stroke:#2C3330;stroke-width:2}
+#forest .sunc{fill:#F6D272}
+#forest .tree{transform-box:fill-box;transform-origin:50% 100%;transition:transform 1.2s cubic-bezier(.3,1.4,.5,1)}
+#forest .trunk{fill:#8A5A3C;transform-box:fill-box;transform-origin:50% 100%;transition:transform .4s}
+#forest .leaf{stroke:#2C3330;stroke-width:1.5;stroke-linejoin:round}
+#forest .crown{transform-box:fill-box;transform-origin:50% 100%;animation:sway 3.5s ease-in-out infinite}
+#forest .tree:nth-child(odd) .crown{animation-delay:-1.4s}
+@keyframes sway{0%,100%{transform:rotate(-1.6deg)}50%{transform:rotate(1.6deg)}}
+#forest.cut .crown{animation:fell .7s ease-in forwards}
+#forest.cut .tree.grown .trunk{transform:scaleY(.3)}
+@keyframes fell{to{transform:translate(14px,10px) rotate(75deg) scale(.4);opacity:0}}
+[data-theme="dark"] #forest .ground{fill:#3F7A5C;stroke:#0B0F0D}
+[data-theme="dark"] #forest .leaf{stroke:#0B0F0D}
+[data-theme="dark"] #forest .sunc{fill:#E8C766;opacity:.85}
+.forest-msg{font-family:var(--font-display,Georgia,serif);font-style:italic;font-size:1.05rem;min-height:1.4em;margin:.3rem 0;color:var(--text-muted)}
+.forest-total{font-weight:600;font-size:.9rem;color:var(--text)}
+.forest-total strong{color:var(--primary-dark)}
+@media (prefers-reduced-motion:reduce){#forest .crown{animation:none}#forest .tree{transition:none}}
